@@ -5,6 +5,7 @@ import com.diya.expensetrackerapi.dto.LoginResponse;
 import com.diya.expensetrackerapi.dto.UserResponse;
 import com.diya.expensetrackerapi.dto.UserSignupRequest;
 import com.diya.expensetrackerapi.model.User;
+import com.diya.expensetrackerapi.security.JwtService;
 import com.diya.expensetrackerapi.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
     private final UserService userService;
+    private final JwtService jwtService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, JwtService jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
     @PostMapping("/api/auth/signup")
     public UserResponse signup (@RequestBody UserSignupRequest request) {
@@ -26,11 +29,11 @@ public class UserController {
         return userResponse;
     }
     @PostMapping("/api/auth/login")
-    public UserResponse login (@RequestBody LoginRequest request) {
+    public LoginResponse login (@RequestBody LoginRequest request) {
         User user = userService.loginUser(request.getUsername(), request.getPassword());
-        UserResponse userResponse = new UserResponse();
-        userResponse.setUsername(user.getUsername());
-        userResponse.setId(user.getId());
-        return userResponse;
+        String token = jwtService.generateToken(user.getUsername());
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setToken(token);
+        return loginResponse;
     }
 }
