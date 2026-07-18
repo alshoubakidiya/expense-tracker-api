@@ -7,6 +7,7 @@ import com.diya.expensetrackerapi.service.ExpenseService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,5 +76,41 @@ public class ExpenseController {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         Expense expense = expenseService.deleteExpenseById(id, username);
         return "Expense with id: " + expense.getId() + " and description: \"" + expense.getDescription() + "\" was deleted";
+    }
+    @GetMapping("/api/expenses/filter")
+    public List<ExpenseResponse> getExpensesByFilter(
+            @RequestParam(required = false) String range,
+            @RequestParam(required = false) LocalDate startDate,
+            @RequestParam(required = false) LocalDate endDate) {
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        LocalDate today = LocalDate.now();
+
+        if (range != null && range.equals("week")) {
+            startDate = today.minusWeeks(1);
+            endDate = today;
+        } else if (range != null && range.equals("month")) {
+            startDate = today.minusMonths(1);
+            endDate = today;
+        } else if (range != null && range.equals("3months")) {
+            startDate = today.minusMonths(3);
+            endDate = today;
+        }
+            List<Expense> expenses = expenseService.getExpensesByDateRange(username, startDate, endDate);
+            List<ExpenseResponse> expenseResponseList = new ArrayList<>();
+            for (Expense expense : expenses) {
+                ExpenseResponse expenseResponse = new ExpenseResponse();
+                expenseResponse.setId(expense.getId());
+                expenseResponse.setDescription(expense.getDescription());
+                expenseResponse.setAmount(expense.getAmount());
+                expenseResponse.setCategory(expense.getCategory());
+                expenseResponse.setDate(expense.getDate());
+                expenseResponseList.add(expenseResponse);
+            }
+            //Convert each Expense into an ExpenseResponse, collect into a list, return it
+            return expenseResponseList;
+
+// if none of these matched, startDate/endDate stay whatever the client sent directly (custom case)
+
     }
 }

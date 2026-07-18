@@ -81,4 +81,7 @@ public class ExpenseService {
             throw new ExpenseNotFoundException("No matching expense found for given id: "+id);
         }
     }
+    public List<Expense> getExpensesByDateRange(String username, LocalDate startDate, LocalDate endDate) {
+        return expenseRepository.findByUserUsernameAndDateBetween(username, startDate, endDate);
+    }
 }
