@@ -1,5 +1,7 @@
 package com.diya.expensetrackerapi.service;
 
+import com.diya.expensetrackerapi.dto.ExpenseRequest;
+import com.diya.expensetrackerapi.dto.ExpenseResponse;
 import com.diya.expensetrackerapi.exception.ExpenseNotFoundException;
 import com.diya.expensetrackerapi.exception.InvalidCredentialsException;
 import com.diya.expensetrackerapi.model.Expense;
@@ -32,7 +34,7 @@ public class ExpenseService {
             expense.setAmount(amount);
             expense.setDate(date);
             expense.setUser(user.get());
-            return  expenseRepository.save(expense);
+            return expenseRepository.save(expense);
         }
         else{
             throw new InvalidCredentialsException("Failed to get user ");
@@ -46,6 +48,36 @@ public class ExpenseService {
         if (expense.isPresent()) {
             return expense.get();
         } else{
+            throw new ExpenseNotFoundException("No matching expense found for given id: "+id);
+        }
+    }
+    public Expense updateExpenseById(Long id, String username, ExpenseRequest request) {
+        Optional<Expense> expense = expenseRepository.findByIdAndUserUsername(id, username);
+        if (expense.isPresent()) {
+            if (request.getDescription() != null) {
+                expense.get().setDescription(request.getDescription());
+            }
+            if (request.getCategory() != null) {
+                expense.get().setCategory(request.getCategory());
+            }
+            if (request.getAmount() != null) {
+                expense.get().setAmount(request.getAmount());
+            }
+            if (request.getDate() != null) {
+                expense.get().setDate(request.getDate());
+            }
+        } else{
+            throw new ExpenseNotFoundException("No matching expense found for given id: "+id);
+        }
+        return expenseRepository.save(expense.get());
+    }
+    public Expense deleteExpenseById(Long id, String username) {
+        Optional<Expense> expense = expenseRepository.findByIdAndUserUsername(id, username);
+        if (expense.isPresent()) {
+            expenseRepository.delete(expense.get());
+            return expense.get();
+
+        }else{
             throw new ExpenseNotFoundException("No matching expense found for given id: "+id);
         }
     }

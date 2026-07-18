@@ -58,4 +58,22 @@ public class ExpenseController {
         expenseResponse.setDate(expense.getDate());
         return expenseResponse;
     }
+    @PutMapping("/api/expenses/{id}")
+    public ExpenseResponse modifyExpenseById(@PathVariable long id, @RequestBody ExpenseRequest expenseRequest) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Expense expense = expenseService.updateExpenseById(id, username, expenseRequest);
+        ExpenseResponse expenseResponse = new ExpenseResponse();
+        expenseResponse.setId(expense.getId());
+        expenseResponse.setDescription(expense.getDescription());
+        expenseResponse.setAmount(expense.getAmount());
+        expenseResponse.setCategory(expense.getCategory());
+        expenseResponse.setDate(expense.getDate());
+        return expenseResponse;
+    }
+    @DeleteMapping("/api/expenses/{id}")
+    public String deleteExpenseById(@PathVariable long id) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Expense expense = expenseService.deleteExpenseById(id, username);
+        return "Expense with id: " + expense.getId() + " and description: \"" + expense.getDescription() + "\" was deleted";
+    }
 }
