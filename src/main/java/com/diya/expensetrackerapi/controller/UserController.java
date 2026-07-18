@@ -7,6 +7,7 @@ import com.diya.expensetrackerapi.dto.UserSignupRequest;
 import com.diya.expensetrackerapi.model.User;
 import com.diya.expensetrackerapi.security.JwtService;
 import com.diya.expensetrackerapi.service.UserService;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,5 +36,9 @@ public class UserController {
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setToken(token);
         return loginResponse;
+    }
+    @GetMapping("/api/test/protected")
+    public String protectedEndpoint() {
+        return "If you can see this, your token worked!";
     }
 }
