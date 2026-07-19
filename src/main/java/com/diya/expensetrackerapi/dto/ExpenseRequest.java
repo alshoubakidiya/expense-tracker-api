@@ -1,12 +1,14 @@
 package com.diya.expensetrackerapi.dto;
 
+import com.diya.expensetrackerapi.model.Category;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class ExpenseRequest {
     private String description;
     private BigDecimal amount;
-    private String category;
+    private Category category;
     private LocalDate date;
 
     public LocalDate getDate() {
@@ -17,11 +19,11 @@ public class ExpenseRequest {
         this.date = date;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

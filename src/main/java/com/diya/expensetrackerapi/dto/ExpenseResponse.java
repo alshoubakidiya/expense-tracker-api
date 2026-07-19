@@ -1,5 +1,6 @@
 package com.diya.expensetrackerapi.dto;
 
+import com.diya.expensetrackerapi.model.Category;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.math.BigDecimal;
@@ -10,7 +11,7 @@ public class ExpenseResponse {
     private Long id;
     private String description;
     private BigDecimal amount;
-    private String category;
+    private Category category;
     private LocalDate date;
     private String message;
 
@@ -46,11 +47,11 @@ public class ExpenseResponse {
         this.amount = amount;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

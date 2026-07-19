@@ -12,7 +12,8 @@ public class Expense {
     private Long id;
     private String description;
     private BigDecimal amount;
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private Category category;
     private LocalDate date;
 
     @ManyToOne //Makes it so many expenses can be logged under one account
@@ -39,10 +40,10 @@ public class Expense {
     public BigDecimal getAmount() {
       return amount;
     }
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
       this.category = category;
     }
-    public String getCategory() {
+    public Category getCategory() {
       return category;
     }
     public void setDate(LocalDate date) {

@@ -4,6 +4,7 @@ import com.diya.expensetrackerapi.dto.ExpenseRequest;
 import com.diya.expensetrackerapi.dto.ExpenseResponse;
 import com.diya.expensetrackerapi.exception.ExpenseNotFoundException;
 import com.diya.expensetrackerapi.exception.InvalidCredentialsException;
+import com.diya.expensetrackerapi.model.Category;
 import com.diya.expensetrackerapi.model.Expense;
 import com.diya.expensetrackerapi.model.User;
 import com.diya.expensetrackerapi.repository.ExpenseRepository;
@@ -24,7 +25,7 @@ public class ExpenseService {
         this.expenseRepository = expenseRepository;
         this.userRepository = userRepository;
     }
-    public Expense createExpense(String username, String description, BigDecimal amount, String category, LocalDate date) {
+    public Expense createExpense(String username, String description, BigDecimal amount, Category category, LocalDate date) {
 
         Optional<User> user = userRepository.findByUsername(username);
         if (user.isPresent()) {
