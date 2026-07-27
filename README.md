@@ -24,7 +24,7 @@ Follows a standard layered architecture: Controller, Service, Repository, Databa
 | GET | `/api/expenses/filter?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD` | Yes | Filter by custom dates |
 
 ## Setup
-Requires JDK 21, Maven, and PostgreSQL. Create a database named `expense_tracker`, then set two environment variables: `DB_PASSWORD` and `JWT_SECRET`. Run the app, Spring Boot creates the tables automatically. Test with Postman using Bearer Token auth on protected endpoints.
+Requires JDK 21, Maven, and PostgreSQL. Create a database named expense_tracker, then set two environment variables: DB_PASSWORD and JWT_SECRET. Run the app, Spring Boot creates the tables automatically. Test with Postman using Bearer Token auth on protected endpoints.
 
 ## What I Learned
 This was my first Spring Boot project. Building the JwtAuthFilter from scratch taught me how token authentication actually works under the hood. An early version accidentally returned hashed passwords in responses which taught me the practical importance of DTOs. Separating concerns across layers made every bug easier to isolate. Separating Controller/Service/Repository layers made every bug in this project easier to isolate and fix, since each layer had exactly one job. It also taught me good practice when creating apps in the future.
