@@ -6,11 +6,13 @@ import com.diya.expensetrackerapi.model.Expense;
 import com.diya.expensetrackerapi.service.ExpenseService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 public class ExpenseController {
 
