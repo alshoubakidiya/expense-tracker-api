@@ -1,6 +1,7 @@
 package com.diya.expensetrackerapi.dto;
 
 import com.diya.expensetrackerapi.model.Category;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import java.time.LocalDate;
 public class ExpenseRequest {
     private String description;
     private BigDecimal amount;
+    @Schema(description = "One of: GROCERIES, LEISURE, ELECTRONICS, UTILITIES, CLOTHING, HEALTH, OTHERS")
     private Category category;
     private LocalDate date;
 
