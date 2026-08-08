@@ -23,8 +23,16 @@ Follows a standard layered architecture: Controller, Service, Repository, Databa
 | GET | `/api/expenses/filter?range=week/month/3months` | Yes | Filter by range |
 | GET | `/api/expenses/filter?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD` | Yes | Filter by custom dates |
 
-## Setup
-Requires JDK 21, Maven, and PostgreSQL. Create a database named expense_tracker, then set two environment variables: DB_PASSWORD and JWT_SECRET. Run the app, Spring Boot creates the tables automatically. Test with Postman using Bearer Token auth on protected endpoints.
+## How to test
+
+This is a live demo, no need to clone or run this locally, it's deployed and you can test it directly on the swagger url.
+
+Live URL: https://expense-tracker-api-nvuz.onrender.com
+Swagger docs (Test it here): https://expense-tracker-api-nvuz.onrender.com/swagger-ui.html
+
+To try it: sign up or log in through Swagger, copy the JWT token you get back, click "Authorize" at the top of the page and paste it in, then try any of the expense endpoints.
+
+Note: it's on a free tier, so the first request after a while of no activity might take a bit to respond.
 
 ## What I Learned
 This was my first Spring Boot project. Building the JwtAuthFilter from scratch taught me how token authentication actually works under the hood. An early version accidentally returned hashed passwords in responses which taught me the practical importance of DTOs. Separating concerns across layers made every bug easier to isolate. Separating Controller/Service/Repository layers made every bug in this project easier to isolate and fix, since each layer had exactly one job. It also taught me good practice when creating apps in the future.
