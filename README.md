@@ -8,7 +8,7 @@ Built as a solution to the [roadmap.sh Expense Tracker API](https://roadmap.sh/p
 Java 21, Spring Boot, Spring Security, JWT, Spring Data JPA, PostgreSQL, Maven
 
 ## Architecture
-Follows a standard layered architecture: Controller, Service, Repository, Database. DTOs decouple the API shape from the database entities so sensitive fields like hashed passwords never leak into responses. A custom JwtAuthFilter validates tokens on every request, and a GlobalExceptionHandler returns clean HTTP responses instead of raw stack traces.
+Follows a standard layered architecture: Controller, Service, Repository, Database. I used DTOs so the API doesn't blindly dump database models out to the client, this keeps sensitive information like passwords hidden. A custom JwtAuthFilter validates tokens on every request, and a GlobalExceptionHandler returns clean HTTP responses instead of raw stack traces.
 
 ## Endpoints
 | Method | Endpoint | Auth | Description |
